@@ -9,6 +9,8 @@ SUNet: <SUNet ID>
 
 Replace this with a description of the program.
 """
+from distutils import text_file
+from lib2to3.pgen2.token import CIRCUMFLEX
 import utils
 
 # Caesar Cipher
@@ -61,6 +63,33 @@ def decrypt_vigenere(ciphertext, keyword):
     for i,ch in enumerate(ciphertext):
         decrypted_text += chr((ord(ch) - ord(keyword[i%keyword_length]) - 2*ord('A')) % 26 + ord('A'))
 
+    return decrypted_text
+
+# Scytale Cipher
+
+def encrypt_scytale(plaintext, circumference):
+    encrypted_text = ''
+    text_length = len(plaintext)
+
+    for i in range(circumference):
+        j = 0
+        while i+j*circumference < text_length:
+            encrypted_text += plaintext[i+j*circumference]
+            j += 1
+
+    return encrypted_text
+
+def decrypt_scytale(ciphertext, circumference):
+    decrypted_text = ''
+    text_length = len(ciphertext)
+    length_div_circumference = text_length//circumference
+
+    for i in range(length_div_circumference):
+        j = 0
+        while i + j*(length_div_circumference) < text_length:
+            decrypted_text += ciphertext[i + j*length_div_circumference]
+            j += 1
+        
     return decrypted_text
 
 # Merkle-Hellman Knapsack Cryptosystem
