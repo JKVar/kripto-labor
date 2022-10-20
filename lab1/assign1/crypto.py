@@ -44,16 +44,24 @@ def encrypt_vigenere(plaintext, keyword):
 
     Add more implementation details here.
     """
-    raise NotImplementedError  # Your implementation here
+    keyword_length = len(keyword)
+    encrypted_text = ''
+    for i,ch in enumerate(plaintext):
+        encrypted_text += chr((ord(ch) + ord(keyword[i%keyword_length]) - 2*ord('A')) % 26 + ord('A'))
 
+    return encrypted_text
 
 def decrypt_vigenere(ciphertext, keyword):
     """Decrypt ciphertext using a Vigenere cipher with a keyword.
 
     Add more implementation details here.
     """
-    raise NotImplementedError  # Your implementation here
+    keyword_length = len(keyword)
+    decrypted_text = ''
+    for i,ch in enumerate(ciphertext):
+        decrypted_text += chr((ord(ch) - ord(keyword[i%keyword_length]) - 2*ord('A')) % 26 + ord('A'))
 
+    return decrypted_text
 
 # Merkle-Hellman Knapsack Cryptosystem
 
