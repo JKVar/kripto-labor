@@ -92,6 +92,72 @@ def decrypt_scytale(ciphertext, circumference):
         
     return decrypted_text
 
+# Railfence Cipher
+
+def encrypt_railfence(plaintext, num_rails):
+    encrypted_text = ''
+    text_len = len(plaintext)
+    faktor1 = num_rails*2
+    faktor2 = -2
+    i = 0
+
+    while faktor1 >= 2:
+        faktor1 -= 2
+        faktor2 += 2
+        j = i
+
+        while j < text_len:
+            if faktor1 > 0:
+                encrypted_text += plaintext[j]
+                j += faktor1
+            if j>= text_len:
+                break
+            else:
+                if faktor2 > 0:
+                    encrypted_text += plaintext[j]
+                    j += faktor2
+        
+        i += 1
+    
+    return encrypted_text
+
+def decrypt_railfence(ciphertext, num_rails):
+    decrypted_text = ''
+    nn = len(ciphertext)
+    fence_matrix = [['' for j in range(nn)] for i in range(num_rails)]
+
+    # building railfence matrix
+    k = 0
+    faktor1 = num_rails*2
+    faktor2 = -2
+    for i in range(num_rails):
+        faktor1 -= 2
+        faktor2 += 2
+        j = i
+        while j < nn:
+            if faktor1 > 0:
+                fence_matrix[i][j] = ciphertext[k]
+                j += faktor1
+                k += 1
+            if j >= nn:
+                break
+            else:
+                if faktor2 > 0:
+                    fence_matrix[i][j] = ciphertext[k]
+                    j += faktor2
+                    k += 1
+    
+    # read railfence matrix
+    direction = 1 # 1 - down; -1 - up
+    j = 0
+    for i in range(nn):
+        decrypted_text += fence_matrix[j][i]
+        if j + direction >= num_rails or j + direction < 0:
+            direction = -direction
+        j += direction
+
+    return decrypted_text
+
 # Merkle-Hellman Knapsack Cryptosystem
 
 def generate_private_key(n=8):
