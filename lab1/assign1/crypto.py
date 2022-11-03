@@ -109,7 +109,7 @@ def decrypt_vigenere_binary(ciphertext, keyword):
     Add more implementation details here.
     """
     keyword_length = len(keyword)
-    decrypted_text = ''
+    decrypted_text = bytearray(b'')
     for i,ch in enumerate(ciphertext):
         decrypted_text += (ch - ord(keyword[i%keyword_length])) % 256
 
@@ -118,7 +118,7 @@ def decrypt_vigenere_binary(ciphertext, keyword):
 # Scytale Cipher
 
 def encrypt_scytale(plaintext, circumference):
-    encrypted_text = bytearray()
+    encrypted_text = ''
     text_length = len(plaintext)
 
     for i in range(circumference):
