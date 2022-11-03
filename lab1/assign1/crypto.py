@@ -38,6 +38,32 @@ def decrypt_caesar(ciphertext):
 
     return decrypted_text
 
+def encrypt_caesar_binary(plaintext):
+    """Encrypt plaintext using a Caesar cipher.
+
+    Add more implementation details here.
+    """
+    print('===========================')
+    print(type(plaintext).__name__)
+    print('===========================')
+    encrypted_text = bytearray()
+    for ch in plaintext:
+        encrypted_text += (ch+3) % 256
+        
+    return encrypted_text
+
+
+def decrypt_caesar_binary(ciphertext):
+    """Decrypt a ciphertext using a Caesar cipher.
+
+    Add more implementation details here.
+    """
+    decrypted_text = bytearray()
+    for ch in ciphertext:
+        decrypted_text += (ch-3) % 256
+
+    return decrypted_text
+
 
 # Vigenere Cipher
 
@@ -65,10 +91,34 @@ def decrypt_vigenere(ciphertext, keyword):
 
     return decrypted_text
 
+def encrypt_vigenere_binary(plaintext, keyword):
+    """Encrypt plaintext using a Vigenere cipher with a keyword.
+
+    Add more implementation details here.
+    """
+    keyword_length = len(keyword)
+    encrypted_text = bytearray()
+    for i,ch in enumerate(plaintext):
+        encrypted_text += (ch + ord(keyword[i%keyword_length])) % 256
+
+    return encrypted_text
+
+def decrypt_vigenere_binary(ciphertext, keyword):
+    """Decrypt ciphertext using a Vigenere cipher with a keyword.
+
+    Add more implementation details here.
+    """
+    keyword_length = len(keyword)
+    decrypted_text = ''
+    for i,ch in enumerate(ciphertext):
+        decrypted_text += (ch - ord(keyword[i%keyword_length])) % 256
+
+    return decrypted_text
+
 # Scytale Cipher
 
 def encrypt_scytale(plaintext, circumference):
-    encrypted_text = ''
+    encrypted_text = bytearray()
     text_length = len(plaintext)
 
     for i in range(circumference):

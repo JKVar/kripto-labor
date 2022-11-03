@@ -10,8 +10,8 @@ If you are a student, you shouldn't need to change anything in this file.
 import random
 
 from crypto import (decrypt_railfence, decrypt_scytale, encrypt_caesar, decrypt_caesar, encrypt_railfence, encrypt_scytale,
-                    encrypt_vigenere, decrypt_vigenere,
-                    generate_private_key, create_public_key,
+                    encrypt_vigenere, decrypt_vigenere, encrypt_vigenere_binary, decrypt_vigenere_binary, 
+                    encrypt_caesar_binary, decrypt_caesar_binary, generate_private_key, create_public_key,
                     encrypt_mh, decrypt_mh)
 
 
@@ -50,6 +50,8 @@ def get_input(binary=False):
     else:
         filename = get_filename()
         flags = 'r'
+        fn = filename.split('.')
+        # binary = False if fn[len(fn)-1] == 'txt' else True
         if binary:
             flags += 'b'
         with open(filename, flags) as infile:
@@ -106,12 +108,18 @@ def clean_vigenere(text):
 def run_caesar():
     action = get_action()
     encrypting = action == 'E'
-    data = clean_caesar(get_input(binary=False))
+    binary = True if _get_selection('(B)inary or (N)on-binary','BN') == 'B' else False
+    data = clean_caesar(get_input(binary))
 
     print("* Transform *")
-    print("{}crypting {} using Caesar cipher...".format('En' if encrypting else 'De', data))
+    # print("{}crypting {} using Caesar cipher...".format('En' if encrypting else 'De', data))
 
-    output = (encrypt_caesar if encrypting else decrypt_caesar)(data)
+    if not binary:
+        print("{}crypting {} using Caesar cipher...".format('En' if encrypting else 'De', data))
+        output = (encrypt_caesar if encrypting else decrypt_caesar)(data)
+    else:
+        print("{}crypting binary file using Caesar cipher...".format('En' if encrypting else 'De'))
+        output = (encrypt_caesar_binary if encrypting else decrypt_caesar_binary)(data)
 
     set_output(output)
 
@@ -119,14 +127,20 @@ def run_caesar():
 def run_vigenere():
     action = get_action()
     encrypting = action == 'E'
-    data = clean_vigenere(get_input(binary=False))
+    binary = True if _get_selection('(B)inary or (N)on-binary','BN') == 'B' else False
+    data = clean_vigenere(get_input(binary))
 
     print("* Transform *")
     keyword = clean_vigenere(input("Keyword? "))
 
-    print("{}crypting {} using Vigenere cipher and keyword {}...".format('En' if encrypting else 'De', data, keyword))
+    # print("{}crypting {} using Vigenere cipher and keyword {}...".format('En' if encrypting else 'De', data, keyword))
 
-    output = (encrypt_vigenere if encrypting else decrypt_vigenere)(data, keyword)
+    if not binary:
+        print("{}crypting {} using Vigenere cipher and keyword {}...".format('En' if encrypting else 'De', data, keyword))
+        output = (encrypt_vigenere if encrypting else decrypt_vigenere)(data, keyword)
+    else:
+        print("{}crypting binary file using Vigenere cipher and keyword {}...".format('En' if encrypting else 'De', keyword))
+        output = (encrypt_vigenere_binary if encrypting else decrypt_vigenere_binary)(data, keyword)
 
     set_output(output)
 
