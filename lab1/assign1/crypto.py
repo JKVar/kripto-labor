@@ -174,7 +174,7 @@ def encrypt_railfence(plaintext, num_rails):
 def decrypt_railfence(ciphertext, num_rails):
     decrypted_text = ''
     nn = len(ciphertext)
-    fence_matrix = [['' for j in range(nn)] for i in range(num_rails)]
+    decrypted_list = ['' for i in range(nn)]
 
     # building railfence matrix
     k = 0
@@ -186,25 +186,19 @@ def decrypt_railfence(ciphertext, num_rails):
         j = i
         while j < nn:
             if faktor1 > 0:
-                fence_matrix[i][j] = ciphertext[k]
+                decrypted_list[j] = ciphertext[k]
                 j += faktor1
                 k += 1
             if j >= nn:
                 break
             else:
                 if faktor2 > 0:
-                    fence_matrix[i][j] = ciphertext[k]
+                    decrypted_list[j] = ciphertext[k]
                     j += faktor2
                     k += 1
     
-    # read railfence matrix
-    direction = 1 # 1 - down; -1 - up
-    j = 0
     for i in range(nn):
-        decrypted_text += fence_matrix[j][i]
-        if j + direction >= num_rails or j + direction < 0:
-            direction = -direction
-        j += direction
+        decrypted_text += decrypted_list[i] 
 
     return decrypted_text
 
