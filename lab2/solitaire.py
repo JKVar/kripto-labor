@@ -99,11 +99,8 @@ def blum_blum_shub(seed, n):
     key = bytearray(b'')
     x = (seed**2)%M
     for i in range(n):
-        st = ''
-        for j in range(8):
-            st += str((x**2)%M%2)
-            x = (x**2)%M
-        key.append(chr(int(st, 2)).encode())
+        key.append(x % 256)
+        x = (x**2)%M
 
     return key
 
