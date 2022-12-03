@@ -3,6 +3,8 @@ from sympy import nextprime
 
 # solitaire algorithm
 # white joker = 53, balck joker = -53 <- csak a megkulomboztetes kedveert
+w_joker = 255
+b_joker = -w_joker
 
 # a.
 def white_joker(cards):
@@ -10,13 +12,13 @@ def white_joker(cards):
     found_joker = False
     j = 0
     while not found_joker and j < nn-1:
-        if cards[j] == 53:
+        if cards[j] == w_joker:
             cards[j], cards[j+1] = cards[j+1], cards[j]
             found_joker = True
         j += 1
 
     if not found_joker:
-        cards.insert(1, 53) # inserting joker to the second place 
+        cards.insert(1, w_joker) # inserting joker to the second place 
         del cards[nn] # removing joker from the end of the card pack
 
     return j
@@ -27,18 +29,18 @@ def black_joker(cards):
     found_joker = False
     j = 0
     while not found_joker and j < nn-2:
-        if cards[j] == -53:
+        if cards[j] == b_joker:
             cards[j], cards[j+2] = cards[j+2], cards[j]
             found_joker = True
         j += 1
 
     if not found_joker:
-        if cards[j] == -53:
-            cards.insert(1, -53)
+        if cards[j] == b_joker:
+            cards.insert(1, b_joker)
             del cards[nn]
         else:
             j += 1
-            cards.insert(2, -53)
+            cards.insert(2, b_joker)
             del cards[nn]
 
     return j
@@ -70,9 +72,10 @@ def key_member(cards):
     else:
         return abs(cards[value])
 
-def solitaire(cards, n):
+def solitaire(seed, n):
+    cards = seed.copy()
     i = 0
-    key = []
+    key = bytearray(b'')
     while i < n:
         white_joker_index = white_joker(cards)
         black_joker_index = black_joker(cards)
