@@ -78,6 +78,7 @@ def decrypt_merkle_hellman(cipher_text, key: tuple):
 def main():
     public_key, private_key = keygen_merkle_hellman()
     message =  input(' [] Enter the message here:\n >> ')
+
     secret_msg = encrypt_merkle_hellman(message, public_key)
     decrypted_msg = decrypt_merkle_hellman(secret_msg, private_key)
 
