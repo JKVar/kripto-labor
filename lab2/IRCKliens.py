@@ -5,7 +5,7 @@ def kaptamUzenetet(s):
   while kapottUzenet[0] == '[':
     nemKell = kapottUzenet.split(']')[1]
     if nemKell != ' >>>':
-      print(kapottUzenet)
+        print(kapottUzenet)
     kapottUzenet = s.recv(1024).decode()
 
 def uzenetKuldes(s):
@@ -14,7 +14,7 @@ def uzenetKuldes(s):
   while sor != '.':
     sor = input('>>> ')
     if sor == '' or sor=='\n':
-      sor = '>>>'
+        sor = '>>>'
     s.send(sor.encode())
     # uzenet += sor
     kaptamUzenetet(s)
