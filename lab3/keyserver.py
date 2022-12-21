@@ -5,7 +5,7 @@ import threading
 lock = threading.Lock()
 
 host = '0.0.0.0'
-server_port = 9000
+server_port = 8000
 s = socket.socket()
 s.bind((host, server_port))
 s.listen(1)
@@ -40,7 +40,6 @@ def find_user(client, user_name, user_list):
     print('> user ', user_name, 'is found')
 
 def talk_with_client(client, user_list):
-    print('\nuser_list: ', user_list)
     print('> talking with client')
     msg = 'HENLO'.encode()
     client.send(msg)
@@ -57,8 +56,7 @@ def talk_with_client(client, user_list):
         find_user(client, what, user_list)
         print('>', what, 'found')
 
-user_list = {'9001': '456, 778, 989'}
-i = 0
+user_list = {}
 while True:
     client, client_addr = s.accept()
     recv_msg = client.recv(1024)
@@ -71,7 +69,5 @@ while True:
 
     # th.daemon = True
     th.start()
-    print('th ', i)
-    i += 1
 
 s.close()

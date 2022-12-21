@@ -4,7 +4,7 @@ import socket
 import merkle_hellman as mh
 
 host = '0.0.0.0'
-server_port = 9000
+server_port = 8000
 help_msg = '''
 python client.py [port]
 [port] - a number bigger than 1024
@@ -60,6 +60,9 @@ def find_user_on_server(other_user):
     
     ssocket.close()
     return None
+
+def begin_communication(other_user, opublic_key, private_key):
+    print('> ')
 
 def run_client(port):
     # generating public and provate keys
