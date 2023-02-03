@@ -5,7 +5,7 @@ import threading
 lock = threading.Lock()
 
 host = '0.0.0.0'
-server_port = 8000
+server_port = 9000
 s = socket.socket()
 s.bind((host, server_port))
 s.listen(1)
@@ -65,9 +65,9 @@ while True:
         break
 
     th = threading.Thread(target=talk_with_client, 
-                args=(client, user_list, ))
+               args=(client, user_list, ))
 
-    # th.daemon = True
+# th.daemon = True
     th.start()
 
 s.close()
